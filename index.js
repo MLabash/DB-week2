@@ -20,7 +20,7 @@ app.get('/tasks', (request, response, next)=>{
   connection.query(sql, (error, results, fields)=> {
     if (error) {
       console.log(error.message);
-      response.status(404).json(error);
+      response.status(500).json(error);
     }
     else{ 
       response.status(200).json(results);     
@@ -45,13 +45,13 @@ app.post('/task', (request, response, next)=>{
         response.status(201).json({ addStatus:'Added successfully'}); 
       }
       else{
-        response.status(404).json({ addStatus:'Could not add the task'});
+        response.status(500).json({ addStatus:'Could not add the task'});
       }    
     });
     
   }
   else{
-    response.status(404).json({ addStatus:'Task text not found'});
+    response.status(400).json({ addStatus:'Task text not found'});
   }
 });
 
@@ -71,12 +71,12 @@ app.patch('/task/:id', (request, response, next)=>{
             response.status(200).json({updateStatus: 'Updated successfully'}); 
           }
           else{
-            response.status(404).json({updateStatus: 'Could not update the task' });
+            response.status(500).json({updateStatus: 'Could not update the task' });
           }
         });
     }
     else{
-      response.status(404).json({updateStatus: 'Task text not found' });
+      response.status(400).json({updateStatus: 'Task text not found' });
     }
 });
 
@@ -93,7 +93,7 @@ app.delete('/task/:id', (request, response, next)=>{
       response.status(200).json({ deleteStatus:'deleted successfully'}); 
     }
     else{
-      response.status(404).json({ deleteStatus:'Task ID is not found'});
+      response.status(400).json({ deleteStatus:'Task ID is not found'});
     }
   });
 });
@@ -111,7 +111,7 @@ app.delete('/tasks', (request, response, next)=>{
       response.status(200).json({ deleteStatus:'deleted successfully'}); 
     }
     else{
-      response.status(404).json({ deleteStatus:'No tasks to be deleted'});
+      response.status(400).json({ deleteStatus:'No tasks to be deleted'});
     }
   });
 });
